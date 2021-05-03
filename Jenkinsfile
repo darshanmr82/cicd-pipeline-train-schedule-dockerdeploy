@@ -42,6 +42,9 @@ pipeline {
                 input 'Deploy to Production?'
                 milestone(1)
                 echo 'Deploying ..'
+                echo env.BUILD_NUMBER'
+                echo $USERPASS
+                echo $USERNAME
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
                         sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull darshanmr82/train-schedule:${env.BUILD_NUMBER}\""
